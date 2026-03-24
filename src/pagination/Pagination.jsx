@@ -1,7 +1,7 @@
 import { range } from '../utils';
 
 const Pagination = ({ total, limit, currentPage, selectPage }) => {
-  const pagesCount = Math.cail(total / limit);
+  const pagesCount = Math.ceil(total / limit);
   const pages = range(1, pagesCount + 1);
 
   return (
