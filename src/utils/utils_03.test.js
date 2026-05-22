@@ -1,0 +1,16 @@
+import { describe, expect, it } from 'vitest';
+import { range } from './utils';
+
+describe('utils', () => {
+  describe('range', () => {
+    it('returns range 1-5', () => {
+      const result = range(1, 6);
+      expect(result).toEqual([1, 2, 3, 4, 5]);
+    });
+
+    it('returns range 41-45', () => {
+      const result = range(41, 46);
+      expect(result).toEqual([41, 42, 43, 44, 45]);
+    });
+  });
+});
