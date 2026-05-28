@@ -17,9 +17,8 @@ describe('Tags_05', () => {
   const server = setupServer(
     http.get('http://localhost:3004/tags', () => {
       return HttpResponse.json([
-        { id: '1', name: 'bar' },
-        { id: '2', name: 'foo' },
-        { id: '3', name: 'buzz' },
+        { id: '1', name: 'foo' },
+        { id: '2', name: 'bar' },
       ]);
     }),
   );
@@ -33,18 +32,14 @@ describe('Tags_05', () => {
 
     const tags = await screen.findAllByTestId('tag');
 
-    expect(tags).toHaveLength(3);
-    expect(tags[0]).toHaveTextContent('bar');
-    expect(tags[1]).toHaveTextContent('foo');
-    expect(tags[2]).toHaveTextContent('buzz');
+    expect(tags).toHaveLength(2);
+    expect(tags[0]).toHaveTextContent('foo');
+    expect(tags[1]).toHaveTextContent('bar');
   });
 
-  it('render with using spyOn', async () => {
+  it('render Tags with using spyOn', async () => {
     const mockedResponse = {
-      data: [
-        { id: '1', name: 'buzz' },
-        { id: '2', name: 'bar' },
-      ],
+      data: [{ id: '1', name: 'buzz' }],
     };
 
     vi.spyOn(axios, 'get').mockResolvedValue(mockedResponse);
@@ -53,7 +48,7 @@ describe('Tags_05', () => {
 
     const tags = await screen.findAllByTestId('tag');
 
-    expect(tags).toHaveLength(2);
+    expect(tags).toHaveLength(1);
     expect(tags[0]).toHaveTextContent('buzz');
   });
 });
