@@ -6,12 +6,11 @@ import axios from 'axios';
 describe('useFetch_01', () => {
   it('should render initial values', () => {
     const { result } = renderHook(() => useFetch('/todos'));
+    const [{ response, isLoading, error }, doFetch] = result.current;
 
-    const [{ error, isLoading, response }, doFetch] = result.current;
-
-    expect(error).toEqual(null);
-    expect(isLoading).toEqual(false);
     expect(response).toEqual(null);
+    expect(isLoading).toEqual(false);
+    expect(error).toEqual(null);
     expect(doFetch).toBeDefined();
   });
 
@@ -19,8 +18,7 @@ describe('useFetch_01', () => {
     const mockedResponse = {
       data: [{ id: '1', text: 'foo', isCompleted: false }],
     };
-
-    vi.spyOn(axios, 'request').mockResolvedValue(mockedResponse);
+    vi.spyOn(axios, 'request').mockReturnValue(mockedResponse);
 
     const { result } = renderHook(() => useFetch('/todos'));
 
@@ -30,18 +28,15 @@ describe('useFetch_01', () => {
 
     const [{ error, isLoading, response }] = result.current;
 
-    expect(error).toEqual(null);
-    expect(isLoading).toEqual(false);
     expect(response).toEqual(mockedResponse.data);
+    expect(isLoading).toEqual(false);
+    expect(error).toEqual(null);
   });
 
   it('should render error values after fetch', async () => {
     const mockedResponse = {
-      response: {
-        data: 'Server error',
-      },
+      response: { data: 'Server error' },
     };
-
     vi.spyOn(axios, 'request').mockRejectedValue(mockedResponse);
 
     const { result } = renderHook(() => useFetch('/todos'));
